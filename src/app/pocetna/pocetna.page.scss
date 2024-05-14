@@ -1,0 +1,135 @@
+#nalog {
+  color: black;
+}
+
+#korpa {
+  color: black;
+}
+#error404 {
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  font-size: 35px;
+  padding-left: 15px;
+  color: rgb(177, 39, 39);
+  text-align: center;
+}
+
+#manjiNaslov{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  padding-left: 15px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+
+#slikaError{
+ width: 10px;
+}
+
+#meni {
+  color: black;
+}  
+
+.carousel-container {
+  display: flex; /* Koristimo flexbox kako bismo postavili slajdove jedan pored drugog */
+  overflow: hidden; /* Skrivamo sadržaj koji je van granica kontejnera */
+  position: relative; /* Dodajemo relativan položaj kako bismo mogli koristiti apsolutan položaj za kontrolne dugmadi */
+}
+
+.slide {
+  flex: 0 0 100%; /* Postavljamo širinu svakog slajda na 100% širine kontejnera */
+  transition: transform 0.5s ease; /* Dodajemo animaciju prelaska */
+}
+
+
+.active {
+  flex: 0 0 100%; /* Aktivni slajd zauzima 100% širine */
+}
+
+.controls {
+  text-align: center; /* Centriramo kontrolne dugmadi */
+  margin-top: 10px; /* Dodajemo malo prostora iznad kontrolnih dugmadi */
+  position: absolute; /* Postavljamo apsolutan položaj */
+  bottom: 20px; /* Postavljamo rastojanje od dna */
+  left: 50%; /* Pomeramo dugmad na sredinu horizontalno */
+  transform: translateX(-50%); /* Pomeramo dugmad na sredinu horizontalno */
+}
+
+
+.slide {
+  width: 100%;
+  display: none;
+}
+
+.slide.active {
+  display: block;
+}
+
+
+.dugmeProdavnica {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: 
+  rgb(177, 39, 39);
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: auto; /* da bi bilo centrirano */
+}
+
+.naslov{
+  font-size: 25px;
+  background-color: white;
+}
+
+#head{
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+// besplatna-dostava img{
+//  width: 50px;
+//  height: 50px;
+// }
+
+.besplatna-dostava {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.besplatna-dostava img {
+  max-width: 100px;
+  max-height: 100px;
+  margin-bottom: 10px;
+}
+
+#besplatnaDOstava {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#tekstDostava{
+  display: flex;
+  margin-top: 5px;
+}
+
+#slikaPodrske{
+  max-width: 80px;
+  max-height: 80px;
+  margin-bottom: 10px;
+}
+
+#tekstZamena{
+  margin-bottom: 50px;
+}
+
+.blede-linije {
+  border-top: 1px solid #f0f0f0;
+  margin: 20px 0;
+}

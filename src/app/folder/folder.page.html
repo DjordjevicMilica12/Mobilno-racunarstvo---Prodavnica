@@ -1,21 +1,53 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+       <ion-menu-button id="meni"></ion-menu-button>   
     </ion-buttons>
-    <ion-title>{{ folder }}</ion-title>
+
+    <ion-label id="error404">
+      Error 404
+    </ion-label>
+
+    <ion-buttons slot="end"> 
+      <ion-button>
+        <ion-icon id="nalog" name="person-circle-outline"></ion-icon>
+        <ion-label id="nalog">Nalog</ion-label>
+      </ion-button>
+
+      <ion-button>
+        <ion-icon id="korpa" name="cart-outline"></ion-icon>
+        <ion-label id="korpa">Korpa</ion-label>
+      </ion-button>    
+    </ion-buttons>    
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" id="ionContent">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
+      <ion-title size="large" id="folder">{{ folder }}</ion-title>
+      <!-- <ion-searchbar></ion-searchbar> -->
+
+      <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)"></ion-searchbar>
+
+
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-grid>
+    <ion-row id="red">
+      <ion-col size="6" *ngFor="let product of filteredProducts" class="kolona">
+        <ion-card id="kartica">
+          <ion-img [src]="product.imageUrl"></ion-img>
+          <ion-card-header >
+            <ion-card-title id="nazivProizvoda">{{ product.name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p id="opisProizvoda">{{ product.description }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

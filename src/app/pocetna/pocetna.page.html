@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+       <ion-menu-button id="meni"></ion-menu-button>   
+    </ion-buttons>
+
+    <!-- <img src="slikaError" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqdCOa8QKYWQYxF9TDDLksUN-N7pBWB9XBbA&usqp=CAU"> -->
+    <ion-buttons slot="end"> 
+      <ion-button>
+        <ion-icon id="nalog" name="person-circle-outline"></ion-icon>
+        <ion-label id="nalog">Nalog</ion-label>
+      </ion-button>
+
+      <ion-button>
+        <ion-icon id="korpa" name="cart-outline"></ion-icon>
+        <ion-label id="korpa">Korpa</ion-label>
+      </ion-button>    
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-header id="head">
+  <!-- <ion-label class="naslov">Na pravom ste mestu</ion-label> -->
+</ion-header>
+
+    <ion-label id="manjiNaslov">
+      Na pravom ste mestu
+    </ion-label>
+    <ion-label id="error404">
+      Error 404
+    </ion-label>
+
+<ion-content [fullscreen]="true" id="ionContent">
+  <div class="carousel-container">
+    <div class="slide" *ngFor="let slide of slides; let i = index" [ngClass]="{ 'active': i === currentSlide }">
+      <img [src]="slide.image" alt="{{ slide.content }}">
+      <!-- <div class="content">{{ slide.content }}</div> -->
+    </div>
+  </div>
+
+    <button class="dugmeProdavnica">Prodavnica</button>
+
+    <div class="blede-linije"></div>
+
+    
+    <div class="besplatna-dostava">
+      <img id="slikaDostave" src="data:image/png;base64,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" alt="Besplatna dostava">
+      <ion-label id="besplatnaDOstava">Besplatna dostava</ion-label>
+      <ion-label id="tekstDostava">Za kupovinu preko 5000 RSD uz plaćanje karticom</ion-label>
+    </div>
+
+    <div class="blede-linije"></div>
+
+
+    <div class="besplatna-dostava">
+      <img id="slikaPodrske" src="data:image/png;base64,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">
+      <ion-label id="besplatnaDOstava">Podrška korisnicima</ion-label>
+      <ion-label id="tekstDostava">Pišite nam ili nas pozovite</ion-label>
+    </div>
+
+    <div class="blede-linije"></div>
+
+
+    <div class="besplatna-dostava">
+      <img src="slikaPovracaja" src="https://cdn-icons-png.flaticon.com/512/2795/2795283.png">
+      <ion-label id="besplatnaDOstava">Moguća zamena</ion-label>
+      <ion-label id="tekstZamena">U roku od 7 dana</ion-label>
+    </div>
+
+</ion-content>

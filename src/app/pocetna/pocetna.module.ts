@@ -1,25 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { FolderPageRoutingModule } from './folder-routing.module';
-
-import { FolderPage } from './folder.page';
+import { PocetnaPageRoutingModule } from './pocetna-routing.module';
+import { PocetnaPage } from './pocetna.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FolderPageRoutingModule
+    PocetnaPageRoutingModule
   ],
-  declarations: [
-    FolderPage
-  ],
-  exports: [
-   
-  ]
+  declarations: [PocetnaPage],
 })
-export class FolderPageModule {}
+export class PocetnaPageModule {}
