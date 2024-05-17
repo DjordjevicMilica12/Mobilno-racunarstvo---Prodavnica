@@ -14,6 +14,22 @@ const routes: Routes = [
   {
     path: 'Pocetna',
     loadChildren: () => import('./pocetna/pocetna.module').then( m => m.PocetnaPageModule)
+  },
+  {
+    path: 'prijava',
+    loadChildren: () => import('./nalogPrijava/nalog.module').then( m => m.NalogPageModule)
+  },
+  {
+    path: 'korpa',
+    loadChildren: () => import('./korpa/korpa.module').then( m => m.KorpaPageModule)
+  },
+  {
+    path: 'registracija',
+    loadChildren: () => import('./nalog-registracija/nalog-registracija.module').then( m => m.NalogRegistracijaPageModule)
+  },
+  {
+    path: 'proizvod/:name',
+    loadChildren: () => import('./proizvod/proizvod.module').then( m => m.ProizvodPageModule)
   }
 ];
 

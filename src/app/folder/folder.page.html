@@ -1,33 +1,8 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-       <ion-menu-button id="meni"></ion-menu-button>   
-    </ion-buttons>
-
-    <ion-label id="error404">
-      Error 404
-    </ion-label>
-
-    <ion-buttons slot="end"> 
-      <ion-button>
-        <ion-icon id="nalog" name="person-circle-outline"></ion-icon>
-        <ion-label id="nalog">Nalog</ion-label>
-      </ion-button>
-
-      <ion-button>
-        <ion-icon id="korpa" name="cart-outline"></ion-icon>
-        <ion-label id="korpa">Korpa</ion-label>
-      </ion-button>    
-    </ion-buttons>    
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true" id="ionContent">
   <ion-header collapse="condense">
-    <ion-toolbar>
+    <ion-toolbar id="gonjiDeo">
       <ion-title size="large" id="folder">{{ folder }}</ion-title>
-      <!-- <ion-searchbar></ion-searchbar> -->
-
+   
       <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)"></ion-searchbar>
 
 
@@ -37,7 +12,7 @@
   <ion-grid>
     <ion-row id="red">
       <ion-col size="6" *ngFor="let product of filteredProducts" class="kolona">
-        <ion-card id="kartica">
+        <ion-card id="kartica" (click)="redirectedToProduct(product.name)">
           <ion-img [src]="product.imageUrl"></ion-img>
           <ion-card-header >
             <ion-card-title id="nazivProizvoda">{{ product.name }}</ion-card-title>

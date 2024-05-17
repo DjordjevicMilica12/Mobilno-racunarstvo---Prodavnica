@@ -1,0 +1,53 @@
+
+<ion-content>
+
+  <div id="sadrzaj">
+    <ion-label>
+     Da li je ovo tvoja prva poseta?
+    </ion-label>
+  </div>
+  
+    <ion-list>
+      <ion-list>
+
+        <ion-item>
+          <ion-input label="Ime" type="text" placeholder="Pera"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Prezime" type="text" placeholder="Perić"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Adresa" type="email" placeholder="Jove Ilića 154"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input label="Email" type="email" placeholder="pera@gmail.com"></ion-input>
+        </ion-item>
+        
+        <ion-item id="password">
+          <ion-input label="Lozinka" type="password" placeholder="lozinka123"></ion-input>
+        </ion-item>
+
+        <ion-item id="password">
+          <ion-input label="Broj telefona" type="number" placeholder="0651234565"></ion-input>
+        </ion-item>
+    
+        <ion-button id="dugmeUlogujSe" >
+          Registruj se
+        </ion-button>
+  
+        <div id="KreiranjeNaloga">
+          <ion-label>
+            Imate nalog?
+          </ion-label>
+          <ion-label style="font-weight: bold" (click)="redirectedToPrijava()">
+            Prijavite se!
+          </ion-label>
+        </div>
+          
+      </ion-list>
+    </ion-list>
+    
+  </ion-content>

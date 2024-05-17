@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-pocetna',
   templateUrl: './pocetna.page.html',
@@ -16,17 +16,36 @@ export class PocetnaPage {
     { image: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/109040/pictures/3/Bela.jpg?u=2022-10-01T15:33:53.098Z&cacheblock=true', content: 'Slide 2' },
     { image: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/109041/pictures/3/Crna.jpg?u=2022-10-01T19:27:45.831Z&cacheblock=true', content: 'Slide 3' },
     { image: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/109119/pictures/3/Crna.jpg?u=2022-10-01T18:25:49.958Z&cacheblock=true', content: 'Slide 4' },
-    
   ];
   currentSlide = 0;
 
-  constructor() {
+  constructor(private router: Router) 
+  {
     setInterval(() => {
       this.nextSlide();
     }, 2000);
   }
 
   nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+    // this.currentSlide = (this.currentSlide + 1) % this.slides.length;
   }
+
+  RedirectToMuskaKolekcija() {
+    this.router.navigate(['/folder/Muskarci']);
+  }
+
+  RedirectToZenskaKolekcija(){
+    this.router.navigate(['/folder/Zene']);
+  }
+
+
+  redirectedToKorpa(){
+    this.router.navigate(['/korpa']);
+  }
+  redirectedToNalog(){
+    this.router.navigate(['/nalog']);
+  }
+
+
+
 }

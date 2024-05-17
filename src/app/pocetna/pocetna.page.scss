@@ -5,24 +5,39 @@
 #korpa {
   color: black;
 }
-#error404 {
-  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
-  font-size: 35px;
-  padding-left: 15px;
-  color: rgb(177, 39, 39);
-  text-align: center;
+
+#naslov{
+  padding-top: 50px;
 }
 
-#manjiNaslov{
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 20px;
-  padding-left: 15px;
+#manjiNaslov {
+  font-family:initial;
+  font-weight: 500;
+  font-size: 25px;
   color: rgb(0, 0, 0);
   text-align: center;
+  margin-top: 5px;
 }
 
-#slikaError{
- width: 10px;
+#slikaError {
+  width: 60px;
+  height: 60px;
+}
+
+#error404 {
+  // font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  font-family: initial;
+  font-weight: 600;
+  font-size: 35px;
+  color: rgb(177, 39, 39);
+  // text-align: right;
+  margin-left: 120px;
+ }
+
+.slika-naslov-slika {
+  display: flex;
+  align-items: center; /* Postavljamo sliku i naslov vertikalno u sredinu */
+  justify-content: center; /* Centriramo sadržaj horizontalno */
 }
 
 #meni {
@@ -38,26 +53,13 @@
 .slide {
   flex: 0 0 100%; /* Postavljamo širinu svakog slajda na 100% širine kontejnera */
   transition: transform 0.5s ease; /* Dodajemo animaciju prelaska */
+  width: 100%;
+  display: none;
 }
 
 
 .active {
   flex: 0 0 100%; /* Aktivni slajd zauzima 100% širine */
-}
-
-.controls {
-  text-align: center; /* Centriramo kontrolne dugmadi */
-  margin-top: 10px; /* Dodajemo malo prostora iznad kontrolnih dugmadi */
-  position: absolute; /* Postavljamo apsolutan položaj */
-  bottom: 20px; /* Postavljamo rastojanje od dna */
-  left: 50%; /* Pomeramo dugmad na sredinu horizontalno */
-  transform: translateX(-50%); /* Pomeramo dugmad na sredinu horizontalno */
-}
-
-
-.slide {
-  width: 100%;
-  display: none;
 }
 
 .slide.active {
@@ -72,28 +74,24 @@
   background-color: 
   rgb(177, 39, 39);
   color: white;
-  padding: 15px 30px;
+  padding: 10px;
   border: none;
   border-radius: 8px;
   font-size: 18px;
-  cursor: pointer;
   margin: auto; /* da bi bilo centrirano */
+  width: 120px; /* Dodali smo fiksnu širinu */
+  margin: 5px; 
+}
+
+.dugmici{
+  display: flex;
+  justify-content: center; /* Centriramo sadržaj horizontalno */
 }
 
 .naslov{
   font-size: 25px;
   background-color: white;
 }
-
-#head{
-  margin-top: 15px;
-  margin-bottom: 5px;
-}
-
-// besplatna-dostava img{
-//  width: 50px;
-//  height: 50px;
-// }
 
 .besplatna-dostava {
   margin-top: 25px;
@@ -133,3 +131,4 @@
   border-top: 1px solid #f0f0f0;
   margin: 20px 0;
 }
+

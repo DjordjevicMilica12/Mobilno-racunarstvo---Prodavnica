@@ -1,0 +1,30 @@
+#sadrzaj{
+    padding-top: 150px;
+    text-align: center;
+    padding-bottom: 35px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+#password{
+    padding-bottom: 5px;
+}
+
+#dugmeUlogujSe {
+    --background: rgb(177, 39, 39);
+    --border-radius: 8px;
+    --color: white;
+    --border-width: 0;
+    font-size: 14px;
+    font-weight: bold;
+    margin: auto; /* Postavljanje na sredinu */
+    display: block; /* Da bi se primenilo margin: auto; */
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+  }
+  
+  #KreiranjeNaloga{
+    padding-top: 20px;
+    padding-left: 10px;
+  }

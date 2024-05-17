@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 
 @Component({
@@ -11,7 +11,7 @@ export class FolderPage implements OnInit {
   public folder: string = '';
   public products: { name: string; description: string; imageUrl: string; }[] = [];
   public filteredProducts: { name: string; description: string; imageUrl: string; }[] = [];
-  constructor(private activatedRoute: ActivatedRoute, private appComponent: AppComponent) {}
+  constructor(private activatedRoute: ActivatedRoute, private appComponent: AppComponent, private router: Router) {}
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id') as string;
@@ -20,17 +20,17 @@ export class FolderPage implements OnInit {
       this.folder = foundPage.title;
           this.products = [
             {
-              name: 'Proizvod 1',
+              name: 'Majca LAGANO',
               description: 'Pamuk/Viskoza',
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },
             {
-              name: 'Proizvod 2',
+              name: 'Proizvod2',
               description: 'Opis proizvoda 2',
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },
             {
-              name: 'Proizvod 3',
+              name: 'Proizvod3',
               description: 'Opis proizvoda 1',
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },
@@ -40,35 +40,35 @@ export class FolderPage implements OnInit {
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },
             {
-              name: 'Proizvod 5',
+              name: 'Proizvod5',
               description: 'Opis proizvoda 1',
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },
             {
-              name: 'Proizvod 6',
+              name: 'Proizvod6',
               description: 'Opis proizvoda 2',
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },
             {
-              name: 'Proizvod 7',
+              name: 'Proizvod7',
               description: 'Opis proizvoda 1',
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },
             {
-              name: 'Proizvod 8',
-              description: 'Opis proizvoda 2',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },{
-              name: 'Proizvod 9',
-              description: 'Opis proizvoda 1',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod 10',
+              name: 'Proizvod8',
               description: 'Opis proizvoda 2',
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },{
-              name: 'Proizvod 11',
+              name: 'Proizvod9',
+              description: 'Opis proizvoda 1',
+              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
+            },
+            {
+              name: 'Proizvod10',
+              description: 'Opis proizvoda 2',
+              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
+            },{
+              name: 'Proizvod11',
               description: 'Opis proizvoda 2',
               imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
             },
@@ -87,6 +87,10 @@ export class FolderPage implements OnInit {
       product.name.toLowerCase().includes(query) || 
       product.description.toLowerCase().includes(query)
     );
-
   }
+
+  redirectedToProduct(name:string){
+    this.router.navigate(['/proizvod', name]);
+  }
+
 }

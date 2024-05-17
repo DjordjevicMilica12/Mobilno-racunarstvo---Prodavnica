@@ -1,23 +1,26 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
-    
-    <ion-menu contentId="main-content" type="overlay">
-      <ion-content>
-        <ion-list>
-          <ion-list-header>Meni</ion-list-header>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerLink]="p.url">
-              <ion-icon slot="start" [name]="p.icon" id="icon"></ion-icon>
-              <ion-label id="title">{{ p.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>   
-        </ion-list>
-      </ion-content>
-    </ion-menu>
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content>
+      <ion-list>
+        <ion-list-header>Meni</ion-list-header>
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+          <ion-item [routerLink]="p.url">
+            <ion-icon slot="start" [name]="p.icon" id="icon"></ion-icon>
+            <ion-label id="title">{{ p.title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>   
+      </ion-list>
+    </ion-content>
+  </ion-menu>
 
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-<app-footer></app-footer>
+  <ion-header>
+    <app-header></app-header>
+  </ion-header>
 
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 
-  </ion-split-pane>
+  <ion-footer>
+    <app-footer></app-footer>
+  </ion-footer>
+
 </ion-app>
