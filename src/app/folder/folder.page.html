@@ -12,13 +12,14 @@
   <ion-grid>
     <ion-row id="red">
       <ion-col size="6" *ngFor="let product of filteredProducts" class="kolona">
-        <ion-card id="kartica" (click)="redirectedToProduct(product.name)">
+        <ion-card id="kartica" (click)="redirectedToProduct(product)">
           <ion-img [src]="product.imageUrl"></ion-img>
           <ion-card-header >
             <ion-card-title id="nazivProizvoda">{{ product.name }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <p id="opisProizvoda">{{ product.description }}</p>
+            <!-- <p id="opisProizvoda">{{ product.description }}</p> -->
+            <p id="opisProizvoda">unisize</p>
           </ion-card-content>
         </ion-card>
       </ion-col>

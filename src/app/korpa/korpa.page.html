@@ -1,4 +1,85 @@
-
 <ion-content>
-  <ion-label>korpa</ion-label>
+  <ion-list id="lista">
+    <ion-item *ngFor="let proizvod of korpa">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="proizvod.imageUrl"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ proizvod.name }}</h2>
+        <p>Cena: {{ proizvod.price }}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <p>Ukupan iznos vaše porudžbine je: {{ ukupanIznos }} din</p>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<!-- ovde treba da proveri da li je korisnik ulogovan i ako jeste da ga preusmeri na predracun a ako nije da se prijavi -->
+
+
+<!-- <ion-button expand="block" (click)="setOpen(true)">Open</ion-button> -->
+<div id="korpa">
+  <button (click)="setOpen(true)" expand="block">
+    Poruči
+  </button>
+</div>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Vaši podaci</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Zatvori</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <p>
+          <ion-list>
+
+            <ion-label id="proveraPodataka">
+              Proverite vaše podatke
+            </ion-label>
+
+
+            <ion-list>
+      
+              <ion-item>
+                <ion-input label="Ime" type="text" placeholder="{{prom}}"> </ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-input label="Prezime" type="text" placeholder="{{prom}}"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-input label="Adresa" type="email" placeholder="{{prom}}"></ion-input>
+              </ion-item>
+             
+              <ion-item id="password">
+                <ion-input label="Broj telefona" type="number" placeholder="{{prom}}"></ion-input>
+              </ion-item>
+          
+              <ion-button id="sacuvajPromene" >
+                Sacuvaj promene
+              </ion-button>
+        
+            </ion-list>
+          </ion-list>
+          
+        </p>
+        
+                  <div class="OdustaniINastavi">
+                    <ion-button id="OdustaniDugme">
+                      Odustani od porudzbine
+                    </ion-button>
+                    
+                    <ion-button id="NastaviDugme" >
+                      Nastavi sa porudzbinom
+                    </ion-button>
+                  </div>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>

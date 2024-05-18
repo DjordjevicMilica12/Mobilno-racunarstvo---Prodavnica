@@ -10,35 +10,6 @@
   padding-top: 50px;
 }
 
-#manjiNaslov {
-  font-family:initial;
-  font-weight: 500;
-  font-size: 25px;
-  color: rgb(0, 0, 0);
-  text-align: center;
-  margin-top: 5px;
-}
-
-#slikaError {
-  width: 60px;
-  height: 60px;
-}
-
-#error404 {
-  // font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
-  font-family: initial;
-  font-weight: 600;
-  font-size: 35px;
-  color: rgb(177, 39, 39);
-  // text-align: right;
-  margin-left: 120px;
- }
-
-.slika-naslov-slika {
-  display: flex;
-  align-items: center; /* Postavljamo sliku i naslov vertikalno u sredinu */
-  justify-content: center; /* Centriramo sadržaj horizontalno */
-}
 
 #meni {
   color: black;
@@ -85,13 +56,21 @@
 
 .dugmici{
   display: flex;
-  justify-content: center; /* Centriramo sadržaj horizontalno */
+  justify-content: center;
 }
 
-.naslov{
+.izdvajamo{
   font-size: 25px;
-  background-color: white;
+  font-weight: bold;
+  justify-content: center;
+  display: flex;
+  padding-top: 20px;
+  font-family: serif;
 }
+// .naslov{
+//   font-size: 25px;
+//   background-color: white;
+// }
 
 .besplatna-dostava {
   margin-top: 25px;
@@ -132,3 +111,7 @@
   margin: 20px 0;
 }
 
+#slikaNaslovna{
+  width: 120%;
+  height: 18%;
+}

@@ -1,24 +1,11 @@
 <ion-content [fullscreen]="true" id="ionContent">
 
-<ion-header [translucent]="false" id="naslov">
+<ion-header [translucent]="false" id="naslov"></ion-header>
+<img id="slikaNaslovna" src="https://lh4.googleusercontent.com/YcjpCVF5em_Q54DwR9OdLuwwff4ICYnHyrqiL4dnogEvJdVjVk7QqmD6wMtKMkrPIvOw_gdsJ4BFO7U0yV5lStzC58I-2XUKR3dznE3Z73nZhdhu97SUeb1Avay2cqKN-g=w1280" alt="Opis slike">
 
-  <div class="slika-naslov-slika">
-    <img id="slikaError" src="https://thumbs.dreamstime.com/b/icon-caution-error-sign-danger-precaution-beware-exclamation-triangle-fatal-268613662.jpg">
-    <ion-label id="manjiNaslov">
-      Na pravom ste mestu
-    </ion-label>
-    <img id="slikaError" src="https://thumbs.dreamstime.com/b/icon-caution-error-sign-danger-precaution-beware-exclamation-triangle-fatal-268613662.jpg">
-  </div>
-  <!-- <ion-label id="error404">
-    Error 404
-  </ion-label>
-   -->
-</ion-header>
-<!-- <ion-header id="head">
-  <ion-label class="naslov">Na pravom ste mestu</ion-label>
-</ion-header> -->
-
-
+<div class="izdvajamo">
+  <ion-label>Iz ponude izdvajamo</ion-label>
+</div>
 
   <div class="carousel-container">
     <div class="slide" *ngFor="let slide of slides; let i = index" [ngClass]="{ 'active': i === currentSlide }">
