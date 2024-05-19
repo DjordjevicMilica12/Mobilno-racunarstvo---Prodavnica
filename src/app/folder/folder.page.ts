@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponent } from '../app.component';
+import { ProizvodServisService } from '../proizvod-servis.service';
 
 @Component({
   selector: 'app-folder',
@@ -9,104 +9,57 @@ import { AppComponent } from '../app.component';
 })
 export class FolderPage implements OnInit {
   public folder: string = '';
-  public products: { name: string; price:string ;description: string; imageUrl: string; }[] = [];
-  public filteredProducts: { name: string; description: string; imageUrl: string; }[] = [];
-  constructor(private activatedRoute: ActivatedRoute, private appComponent: AppComponent, private router: Router) {}
+  public products: any[] = [];
+  public maleProducts: any[] = []; // Proizvodi za muškarce
+  public femaleProducts: any[] = []; // Proizvodi za žene
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private productService: ProizvodServisService
+  ) {}
 
   ngOnInit() {
-    const id = this.activatedRoute.snapshot.paramMap.get('id') as string;
-    const foundPage = this.appComponent.appPages.find(page => page.url === `/folder/${id}`);
-    if (foundPage) {
-      this.folder = foundPage.title;
-          this.products = [
-            {
-              name: 'Majica lagano',
-              price:'2000 din',
-              description: 'Muška majica'+
-              '100% pamuk, Singl Umbro 160g/m2 - pamuk visokog kvaliteta'+
-              'Standardne veličine i ravan kroj'+
-              'Direktna digitalna štampa (DTG) - najsavremenija tehnika štampe'+
-              'Proizvedeno u Srbiji',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod2',
-              price:'2000 din',
-              description: 'Opis proizvoda 2',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/109119/pictures/3/Crna.jpg?u=2022-10-01T18:25:49.958Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod3',
-              price:'2000 din',
-              description: 'Opis proizvoda 1',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod 4',
-              price:'2000 din',
-              description: 'Opis proizvoda 2',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod5',
-              price:'2000 din',
-              description: 'Opis proizvoda 1',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod6',
-              price:'2000 din',
-              description: 'Opis proizvoda 2',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod7',
-              price:'2000 din',
-              description: 'Opis proizvoda 1',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod8',
-              price:'2000 din',
-              description: 'Opis proizvoda 2',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },{
-              name: 'Proizvod9',
-              price:'2000 din',
-              description: 'Opis proizvoda 1',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            {
-              name: 'Proizvod10',
-              price:'2000 din',
-              description: 'Opis proizvoda 2',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },{
-              name: 'Proizvod11',
-              price:'2000 din',
-              description: 'Opis proizvoda 2',
-              imageUrl: 'https://brendly-prod.s3.eu-central-1.amazonaws.com/5988/10566/3/108805/pictures/3/Bela.jpg?u=2022-05-27T17:58:46.011Z&cacheblock=true'
-            },
-            
-          ];
-
-          
-        
-      }
-      this.filteredProducts = this.products;
+    this.productService.getProducts().subscribe((data: any[]) => {
+      this.products = data;
+      this.maleProducts = this.products.filter(product => product.pol === 'muski');
+      this.femaleProducts = this.products.filter(product => product.pol === 'zenski');
+      this.checkFolderURL();
+    });
   }
 
   handleInput(event: any) {
     const query = event.target.value.toLowerCase();
-    this.filteredProducts = this.products.filter(product => 
-      product.name.toLowerCase().includes(query) || 
-      product.description.toLowerCase().includes(query)
-    );
+    // filter za musk
+    this.maleProducts = this.products
+      .filter(product => product.pol === 'muski')
+      .filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query)
+      );
+    // filter za zens
+    this.femaleProducts = this.products
+      .filter(product => product.pol === 'zenski')
+      .filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query)
+      );
   }
 
-  redirectedToProduct(product:any){
+  redirectedToProduct(product: any) {
     this.router.navigate(['/proizvod', product.name], {
-      state: { product }});
+      state: { product }
+    });
   }
 
+  checkFolderURL() {
+    const folderUrl = this.router.url;
+    if (folderUrl.includes('Zene')) {
+      this.femaleProducts = this.products.filter(product => product.pol === 'zenski');
+      this.maleProducts = [];
+    } else if (folderUrl.includes('Muskarci')) {
+      this.maleProducts = this.products.filter(product => product.pol === 'muski');
+      this.femaleProducts = [];
+    }
+  }
 }

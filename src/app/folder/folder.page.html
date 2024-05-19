@@ -2,16 +2,14 @@
   <ion-header collapse="condense">
     <ion-toolbar id="gonjiDeo">
       <ion-title size="large" id="folder">{{ folder }}</ion-title>
-   
       <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)"></ion-searchbar>
-
-
     </ion-toolbar>
   </ion-header>
 
-  <ion-grid>
+ 
+  <ion-grid *ngIf="maleProducts.length > 0">
     <ion-row id="red">
-      <ion-col size="6" *ngFor="let product of filteredProducts" class="kolona">
+      <ion-col size="6" *ngFor="let product of maleProducts" class="kolona">
         <ion-card id="kartica" (click)="redirectedToProduct(product)">
           <ion-img [src]="product.imageUrl"></ion-img>
           <ion-card-header >
@@ -19,7 +17,25 @@
           </ion-card-header>
           <ion-card-content>
             <!-- <p id="opisProizvoda">{{ product.description }}</p> -->
-            <p id="opisProizvoda">unisize</p>
+            <p id="opisProizvoda">Pamučna majica</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-grid *ngIf="femaleProducts.length > 0">
+    <ion-row id="red">
+      <ion-col size="6" *ngFor="let product of femaleProducts" class="kolona">
+        <ion-card id="kartica" (click)="redirectedToProduct(product)">
+          <ion-img [src]="product.imageUrl"></ion-img>
+          <ion-card-header >
+            <ion-card-title id="nazivProizvoda">{{ product.name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <p id="opisProizvoda">{{ product.description }}</p> -->
+            <p id="opisProizvoda">Pamuk/Viskoza</p>
           </ion-card-content>
         </ion-card>
       </ion-col>

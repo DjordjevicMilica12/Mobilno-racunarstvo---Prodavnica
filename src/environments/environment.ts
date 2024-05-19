@@ -2,8 +2,22 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// export const environment = {
+//   production: false,
+//   firebaseAPIKey:'AIzaSyCdoohMSQFxzss3DxSfYPPoen18bJRvSy4'
+// };
+
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    firebaseAPIKey: 'AIzaSyCdoohMSQFxzss3DxSfYPPoen18bJRvSy4',
+    authDomain: 'prodavnica-mob-rac.firebaseapp.com',
+    databaseURL: 'https://prodavnica-mob-rac-default-rtdb.europe-west1.firebasedatabase.app',
+    projectId: 'prodavnica-mob-rac',
+    storageBucket: 'prodavnica-mob-rac.appspot.com',
+    messagingSenderId: '922801498229', // Dodajte ovu liniju
+    appId: '1:922801498229:web:abcdef123456' // Dodajte ovu liniju
+  }
 };
 
 /*
@@ -14,3 +28,4 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+  
