@@ -12,22 +12,8 @@ import { Observable, forkJoin } from 'rxjs';
 export class PorudzbinaServiceService {
 
   constructor(private http: HttpClient) { }
+  private trenutnaPorudzbinaID: string | null = null;
 
-
-
-  // kreirajPorudzbinu(porudzbina: any): Observable<string> {
-  //   return this.http.post<any>(`${environment.firebaseConfig.databaseURL}/porudzbine.json`, porudzbina).pipe(
-  //     map(response => response.name) // Firebase vraća ID kao 'name'
-  //   );
-  // }
-
-  // dodajStavkePorudzbine(porudzbinaID: string, stavke: any[]): Observable<void[]> {
-  //   const stavkeRequests = stavke.map((stavka, index) => {
-  //     stavka.redniBroj = index + 1;
-  //     return this.http.post<void>(`${environment.firebaseConfig.databaseURL}/stavkePorudzbine/${porudzbinaID}.json`, stavka);
-  //   });
-  //   return forkJoin(stavkeRequests);
-  // }
 
   kreirajPorudzbinu(porudzbina: any, stavke: any[]): Observable<any> {
     return this.http.post<any>(`${environment.firebaseConfig.databaseURL}/porudzbine.json`, porudzbina).pipe(
@@ -42,10 +28,16 @@ export class PorudzbinaServiceService {
     );
   }
 
+  PostaviPorudzbinaID(porudzbinaID: string) {
+    this.trenutnaPorudzbinaID = porudzbinaID;
+  }
 
+  dajTrenutniIDPorudzbine(): string | null {
+    return this.trenutnaPorudzbinaID;
+  }
 
-  obrisiPorudzbinu(id: string) {
-    
+  obrisiPorudzbinu(porudzbinaId: string): Observable<any> {
+    return this.http.delete<any>(`${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaId}.json`);
   }
 
 

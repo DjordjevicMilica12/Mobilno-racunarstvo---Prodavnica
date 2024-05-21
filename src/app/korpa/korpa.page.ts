@@ -68,6 +68,7 @@ export class KorpaPage implements OnInit {
 
         this.porudzbinaServis.kreirajPorudzbinu(porudzbina, stavke).subscribe((porudzbinaID) => {
           console.log('Porudžbina kreirana uspešno. ID:', porudzbinaID);
+          this.porudzbinaServis.PostaviPorudzbinaID(porudzbinaID);
           // this.router.navigate(['/Pocetna']);
         });
       }
@@ -134,7 +135,17 @@ export class KorpaPage implements OnInit {
   }
 
   obrisiPorudzbinu(){
-
+    const porudzbinaID = this.porudzbinaServis.dajTrenutniIDPorudzbine();
+    if (porudzbinaID) {
+      this.porudzbinaServis.obrisiPorudzbinu(porudzbinaID).subscribe(() => {
+        alert('Porudžbina je uspešno obrisana.');
+        this.korpaServis.isprazniKorpu();
+        this.ukupanIznos = 0;
+        this.isModalOpen = false;
+      });
+    } else {
+      alert('Nema aktivne porudžbine za brisanje.');
+    }
 }
   
 }
