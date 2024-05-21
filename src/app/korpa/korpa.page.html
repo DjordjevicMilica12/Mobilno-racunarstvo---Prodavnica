@@ -20,9 +20,12 @@
 
 <!-- <ion-button expand="block" (click)="setOpen(true)">Open</ion-button> -->
 <div id="korpa">
-  <button (click)="setOpen(true)" expand="block">
+  <!-- <button (click)="setOpen(true)" expand="block">
     Poruči
-  </button>
+  </button> -->
+    <button (click)="goToCheckout()" expand="block">
+      Poruči
+    </button>
 </div>
   <ion-modal [isOpen]="isModalOpen">
     <ng-template>
@@ -46,22 +49,22 @@
             <ion-list>
       
               <ion-item>
-                <ion-input label="Ime" type="text" placeholder="{{prom}}"> </ion-input>
+                <ion-input label="Ime" type="text" [(ngModel)]="ime"> </ion-input>
               </ion-item>
       
               <ion-item>
-                <ion-input label="Prezime" type="text" placeholder="{{prom}}"></ion-input>
+                <ion-input label="Prezime" type="text" [(ngModel)]="prezime"></ion-input>
               </ion-item>
       
               <ion-item>
-                <ion-input label="Adresa" type="email" placeholder="{{prom}}"></ion-input>
+                <ion-input label="Adresa" type="email" [(ngModel)]="adresa"></ion-input>
               </ion-item>
              
               <ion-item id="password">
-                <ion-input label="Broj telefona" type="number" placeholder="{{prom}}"></ion-input>
+                <ion-input label="Broj telefona" type="number" [(ngModel)]="brojTelefona"></ion-input>
               </ion-item>
           
-              <ion-button id="sacuvajPromene" >
+              <ion-button id="sacuvajPromene" (click)="SacuvajPromene()">
                 Sacuvaj promene
               </ion-button>
         
@@ -75,7 +78,7 @@
                       Odustani od porudzbine
                     </ion-button>
                     
-                    <ion-button id="NastaviDugme" >
+                    <ion-button id="NastaviDugme">
                       Nastavi sa porudzbinom
                     </ion-button>
                   </div>

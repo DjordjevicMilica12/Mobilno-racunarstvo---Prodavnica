@@ -21,6 +21,7 @@ export class AppComponent {
     this.localStorage.clear('token');
     this.localStorage.clear('user');
     this.localStorage.clear('userDetails');
+    this.localStorage.clear('localId');
     this.router.navigate(['/prijava']);
   }
 }

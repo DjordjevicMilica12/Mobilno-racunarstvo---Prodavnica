@@ -11,7 +11,7 @@
     <ion-row id="red">
       <ion-col size="6" *ngFor="let product of maleProducts" class="kolona">
         <ion-card id="kartica" (click)="redirectedToProduct(product)">
-          <ion-img [src]="product.imageUrl"></ion-img>
+          <ion-img [src]="product.imageUrl" id="slikaPorizvoda"></ion-img>
           <ion-card-header >
             <ion-card-title id="nazivProizvoda">{{ product.name }}</ion-card-title>
           </ion-card-header>
@@ -29,7 +29,7 @@
     <ion-row id="red">
       <ion-col size="6" *ngFor="let product of femaleProducts" class="kolona">
         <ion-card id="kartica" (click)="redirectedToProduct(product)">
-          <ion-img [src]="product.imageUrl"></ion-img>
+          <ion-img [src]="product.imageUrl" id="slikaPorizvoda"></ion-img>
           <ion-card-header >
             <ion-card-title id="nazivProizvoda">{{ product.name }}</ion-card-title>
           </ion-card-header>

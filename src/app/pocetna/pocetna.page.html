@@ -1,16 +1,17 @@
 <ion-content [fullscreen]="true" id="ionContent">
 
-<ion-header [translucent]="false" id="naslov"></ion-header>
-<img id="slikaNaslovna" src="https://lh6.googleusercontent.com/AqH3PXlQ18hiEPbJOZPklLYCkViJMcF_ECwnx-L_UIzbDNLFka3CzHUq9bJX0tkTrobfHrZhli3vbMjOhCzchxvBZA-4BFjEIaPOR4rFF-ImFpPEj6Pyi2V7SexQV1Pxug=w1280" alt="Opis slike">
-
+  <ion-header [translucent]="false" id="naslov"></ion-header>
+  <div class="image-container">
+    <img id="slikaNaslovna" src="https://lh5.googleusercontent.com/U7QK_POBrMBZIslGGER-kojP0rwHL7TWY4q0z21gLN8tuv-9QSZQosSDwNjrQWmxur8oXVjbI6s0G1rFLEKYnjbQWvRSPNwcA0mn6b28WY7V_nVsE4hu6etiq-Iw05te7A=w1280" alt="Opis slike">
+  </div>
+  
 <div class="izdvajamo">
   <ion-label>Iz ponude izdvajamo</ion-label>
 </div>
 
   <div class="carousel-container">
-    <div class="slide" *ngFor="let slide of slides; let i = index" [ngClass]="{ 'active': i === currentSlide }">
-      <img [src]="slide.image" alt="{{ slide.content }}">
-      <!-- <div class="content">{{ slide.content }}</div> -->
+    <div class="product" *ngFor="let product of products; let i = index" [ngClass]="{ 'active': i === currentSlide }">
+      <img [src]="product.imageUrl" alt="{{ product.content }}">
     </div>
   </div>
 

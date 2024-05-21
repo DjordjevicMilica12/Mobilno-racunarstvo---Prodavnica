@@ -16,21 +16,16 @@
 }  
 
 .carousel-container {
-  display: flex; /* Koristimo flexbox kako bismo postavili slajdove jedan pored drugog */
-  overflow: hidden; /* Skrivamo sadržaj koji je van granica kontejnera */
-  position: relative; /* Dodajemo relativan položaj kako bismo mogli koristiti apsolutan položaj za kontrolne dugmadi */
-}
-
-.slide {
-  flex: 0 0 100%; /* Postavljamo širinu svakog slajda na 100% širine kontejnera */
-  transition: transform 0.5s ease; /* Dodajemo animaciju prelaska */
-  width: 100%;
-  display: none;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  max-width: 600px;
+  margin: auto;
 }
 
 
 .active {
-  flex: 0 0 100%; /* Aktivni slajd zauzima 100% širine */
+  flex: 0 0 100%;
 }
 
 .slide.active {
@@ -111,7 +106,28 @@
   margin: 20px 0;
 }
 
-#slikaNaslovna{
-  width: 120%;
-  height: 18%;
+// #slikaNaslovna{
+//   width: 120%;
+//   height: 18%;
+//   background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+// }
+
+.image-container {
+  position: relative;
+}
+
+#slikaNaslovna {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.image-container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 25px; /* Visina gradijenta - prilagodite po želji */
+  background: linear-gradient(to bottom, rgba(240, 7, 7, 0) 0%, rgb(255, 255, 255) 100%);
 }

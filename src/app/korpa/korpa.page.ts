@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { KorpaServiceService } from '../korpa-service.service';
+import { Router } from '@angular/router';
+import { PorudzbinaServiceService } from '../porudzbina-service.service';
 
 @Component({
   selector: 'app-korpa',
@@ -11,7 +13,18 @@ export class KorpaPage implements OnInit {
   public ukupanIznos: number = 0;
   public prom: string="ddd";
 
-  constructor(private korpaServis:KorpaServiceService) { }
+  public ime: string="";
+  public prezime: string="";
+  public adresa: string="";
+  public brojTelefona: string="";
+  public email: string="";
+  public lozinka: string="";
+
+  constructor(
+    private korpaServis:KorpaServiceService,
+    private router: Router,
+    private porudzbinaServis: PorudzbinaServiceService,
+    ) { }
 
   ngOnInit() {
     this.korpaServis.getKorpa().subscribe(korpa => {
@@ -26,12 +39,55 @@ export class KorpaPage implements OnInit {
   
   isModalOpen = false;
 
-  setOpen(isOpen: boolean) {
+  goToCheckout() {
+    if (this.isUserLoggedIn()) {
+      this.isModalOpen=true;
+    } else {
+      this.router.navigate(['/prijava']); 
+    }
+  }
+
+  setOpen(isOpen: boolean) { 
     this.isModalOpen = isOpen;
   }
 
-  Poruci(){
-    
+  isUserLoggedIn(): boolean {
+    const userJSON = localStorage.getItem('ngx-webstorage|user');
+    if (userJSON) {
+      const userObj = JSON.parse(userJSON);
+      const email = userObj.email;
+      const lozinka = userObj.lozinka;
+
+      this.ime = userObj.ime;
+      this.prezime = userObj.prezime;
+      this.adresa = userObj.adresa;
+      this.brojTelefona = userObj.brojTelefona;
+
+      return !!email && !!lozinka;
+    }
+    return false;
   }
+  
+  SacuvajPromene(){
+    const userLocalId = localStorage.getItem('ngx-webstorage|localid');
+    const userJSON = localStorage.getItem('ngx-webstorage|user');
+    if (userLocalId && userJSON) {
+      const userObj = JSON.parse(userJSON);
+      const newData = {
+        ime: this.ime,
+        prezime: this.prezime,
+        adresa: this.adresa,
+        brojTelefona: this.brojTelefona,
+        email:userObj.email,
+        lozinka:userObj.lozinka,
+      }
+
+      this.porudzbinaServis.izmeniPodatkeKorisnika(newData).subscribe(() => {
+        console.log('Podaci korisnika su ažurirani.');
+      });
+    }
+  }
+
+
 
 }

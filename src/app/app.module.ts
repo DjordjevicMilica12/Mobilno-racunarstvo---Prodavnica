@@ -59,7 +59,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -82,7 +81,7 @@ import { AuthService } from './auth.service';
       provide: RouteReuseStrategy, 
       useClass: IonicRouteStrategy 
     },
-    AuthService
+
   ],
   bootstrap: [AppComponent],
 })
