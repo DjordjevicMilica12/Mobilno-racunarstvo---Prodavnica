@@ -3,6 +3,7 @@ import { KorpaServiceService } from '../korpa-service.service';
 import { Router } from '@angular/router';
 import { PorudzbinaServiceService } from '../porudzbina-service.service';
 
+
 @Component({
   selector: 'app-korpa',
   templateUrl: './korpa.page.html',
@@ -39,13 +40,43 @@ export class KorpaPage implements OnInit {
   
   isModalOpen = false;
 
+  
+
   goToCheckout() {
+
+    if (this.korpa.length === 0) {
+      window.alert('Morate dodati proizvode u korpu pre nego što nastavite sa porudžbinom.');
+      return;
+    }
+
     if (this.isUserLoggedIn()) {
-      this.isModalOpen=true;
+      this.isModalOpen = true;
+
+      const userId = localStorage.getItem('ngx-webstorage|localid');
+      if (userId) {
+        const userObjId = JSON.parse(userId);
+
+        const porudzbina = {
+          //datum: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+          kupacID: userObjId,
+          datum: new Date(),
+        };
+
+        const stavke = this.korpa.map(proizvod => ({
+          proizvodID: proizvod.id
+        }));
+
+        this.porudzbinaServis.kreirajPorudzbinu(porudzbina, stavke).subscribe((porudzbinaID) => {
+          console.log('Porudžbina kreirana uspešno. ID:', porudzbinaID);
+          // this.router.navigate(['/Pocetna']);
+        });
+      }
+
     } else {
       this.router.navigate(['/prijava']); 
     }
   }
+
 
   setOpen(isOpen: boolean) { 
     this.isModalOpen = isOpen;
@@ -88,6 +119,22 @@ export class KorpaPage implements OnInit {
     }
   }
 
+  NastaviSaPorudzbinom() {
 
+    alert('Uspešno je realizovana porudžbina!');
 
+    this.korpaServis.isprazniKorpu();
+    this.ukupanIznos = 0;
+    this.isModalOpen = false;
+  }
+
+  ObrisiSve(){
+    this.korpaServis.isprazniKorpu();
+    this.ukupanIznos = 0;
+  }
+
+  obrisiPorudzbinu(){
+
+}
+  
 }

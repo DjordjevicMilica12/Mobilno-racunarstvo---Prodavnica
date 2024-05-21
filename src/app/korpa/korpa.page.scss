@@ -63,3 +63,17 @@ ion-content {
 #OdustaniDugme{
     --background:  rgb(177, 39, 39);
 }
+
+#kanta {
+    display: flex;
+    align-items: center; /* Poravnanje po vertikali */
+    justify-content: space-between; /* Prostor između elemenata */
+    padding: 10px;
+    border: 1px solid #000; /* Dodaje okvir */
+    border-radius: 5px; /* Dodaje zaobljene uglove, po želji */
+    float: right; /* Pomera div skroz udesno */
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}

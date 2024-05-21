@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 // import { AuthService } from './auth.service';
 // import { Databse, set,ref ,update} from '@angular/fire/database';
-import { tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,34 @@ export class PorudzbinaServiceService {
 
 
 
-  kreirajPorudzbinu() {
-    
+  // kreirajPorudzbinu(porudzbina: any): Observable<string> {
+  //   return this.http.post<any>(`${environment.firebaseConfig.databaseURL}/porudzbine.json`, porudzbina).pipe(
+  //     map(response => response.name) // Firebase vraća ID kao 'name'
+  //   );
+  // }
+
+  // dodajStavkePorudzbine(porudzbinaID: string, stavke: any[]): Observable<void[]> {
+  //   const stavkeRequests = stavke.map((stavka, index) => {
+  //     stavka.redniBroj = index + 1;
+  //     return this.http.post<void>(`${environment.firebaseConfig.databaseURL}/stavkePorudzbine/${porudzbinaID}.json`, stavka);
+  //   });
+  //   return forkJoin(stavkeRequests);
+  // }
+
+  kreirajPorudzbinu(porudzbina: any, stavke: any[]): Observable<any> {
+    return this.http.post<any>(`${environment.firebaseConfig.databaseURL}/porudzbine.json`, porudzbina).pipe(
+      switchMap(response => {
+        const porudzbinaID = response.name; // Firebase vraća ID kao 'name'
+        const stavkeRequests = stavke.map((stavka, index) => {
+          // stavka.redniBroj = index + 1;
+          return this.http.put(`${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaID}/stavke/${index}.json`, stavka);
+        });
+        return forkJoin(stavkeRequests).pipe(map(() => porudzbinaID));
+      })
+    );
   }
+
+
 
   obrisiPorudzbinu(id: string) {
     

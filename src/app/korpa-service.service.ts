@@ -19,6 +19,10 @@ export class KorpaServiceService {
     return this.korpaSubject.asObservable();
   }
 
+  isprazniKorpu() {
+    this.korpa = [];
+    this.korpaSubject.next(this.korpa);
+  }
 
 
 }

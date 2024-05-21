@@ -12,6 +12,11 @@
     <ion-item>
       <p>Ukupan iznos vaše porudžbine je: {{ ukupanIznos }} din</p>
     </ion-item>
+
+    <div id="kanta" (click)="ObrisiSve()">
+      <ion-label>obrisi sve</ion-label>
+      <ion-icon name="trash-outline"></ion-icon>
+    </div>
   </ion-list>
 </ion-content>
 
@@ -74,11 +79,11 @@
         </p>
         
                   <div class="OdustaniINastavi">
-                    <ion-button id="OdustaniDugme">
+                    <ion-button id="OdustaniDugme" (click)="obrisiPorudzbinu()">
                       Odustani od porudzbine
                     </ion-button>
                     
-                    <ion-button id="NastaviDugme">
+                    <ion-button id="NastaviDugme" (click)="NastaviSaPorudzbinom()">
                       Nastavi sa porudzbinom
                     </ion-button>
                   </div>
