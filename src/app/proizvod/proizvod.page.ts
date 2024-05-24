@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { KorpaServiceService } from '../korpa-service.service';
+import { ProizvodServisService } from '../proizvod-servis.service';
 
 @Component({
   selector: 'app-proizvod',
@@ -13,12 +14,15 @@ export class ProizvodPage implements OnInit {
   public productName: string | null = null;
   public product: any;
   clicked: boolean = false;
+  formatiranOpis: string = '';
 
+  
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private router: Router,
     private korpaServis: KorpaServiceService,
+    private proizvodServis:ProizvodServisService,
   ) {}
 
   ngOnInit() {
@@ -26,8 +30,9 @@ export class ProizvodPage implements OnInit {
     if (navigation?.extras?.state) {
       this.product = navigation.extras.state['product'];
     } else {
-      this.product = null; // Ili neka druga default vrednost
+      this.product = null; 
     }
+
   }
 
 

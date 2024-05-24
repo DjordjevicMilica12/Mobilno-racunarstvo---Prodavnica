@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 // import { AuthService } from './auth.service';
 // import { Databse, set,ref ,update} from '@angular/fire/database';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { Observable, forkJoin } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +14,12 @@ export class PorudzbinaServiceService {
   constructor(private http: HttpClient) { }
   private trenutnaPorudzbinaID: string | null = null;
 
+ 
 
   kreirajPorudzbinu(porudzbina: any, stavke: any[]): Observable<any> {
     return this.http.post<any>(`${environment.firebaseConfig.databaseURL}/porudzbine.json`, porudzbina).pipe(
       switchMap(response => {
-        const porudzbinaID = response.name; // Firebase vraća ID kao 'name'
+        const porudzbinaID = response.name;
         const stavkeRequests = stavke.map((stavka, index) => {
           // stavka.redniBroj = index + 1;
           return this.http.put(`${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaID}/stavke/${index}.json`, stavka);
@@ -62,6 +63,22 @@ export class PorudzbinaServiceService {
       );
   }
 
+
+  dohvatiPorudzbineZaKorisnika(localId: string): Observable<any[]> {
+    return this.http.get<{ [key: string]: any }>(`${environment.firebaseConfig.databaseURL}/porudzbine.json`).pipe(
+      map(porudzbine => {
+        const korisnikovePorudzbine = [];
+        const cleanedUserLocalId = localId ? localId.replace(/"/g, '') : null; 
+        for (const key in porudzbine) {
+          if (porudzbine[key]?.kupacID === cleanedUserLocalId) {
+            korisnikovePorudzbine.push({ ...porudzbine[key], id: key });
+          }
+        }
+        console.log('korisnikove porudzbine:', korisnikovePorudzbine); 
+        return korisnikovePorudzbine.length > 0 ? korisnikovePorudzbine : [];
+      })
+    );
+  }
 
 
 

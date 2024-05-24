@@ -4,14 +4,22 @@
       <ion-list>
         <ion-list-header>Meni</ion-list-header>
         <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-          <ion-item [routerLink]="p.url" *ngIf="p.title !== 'Odjava'">
+
+          <ion-item [routerLink]="p.url" *ngIf="p.title !== 'Odjava' && p.title !== 'Istorija porudzbina'">
             <ion-icon slot="start" [name]="p.icon" id="icon"></ion-icon>
             <ion-label id="title">{{ p.title }}</ion-label>
           </ion-item>
+
           <ion-item (click)="odjava()" *ngIf="p.title === 'Odjava'">
             <ion-icon slot="start" [name]="p.icon" id="icon"></ion-icon>
             <ion-label id="title">{{ p.title }}</ion-label>
           </ion-item>
+
+          <ion-item (click)="navigate()" *ngIf="p.title === 'Istorija porudzbina'">
+            <ion-icon slot="start" [name]="p.icon" id="icon"></ion-icon>
+            <ion-label id="title">{{ p.title }}</ion-label>
+          </ion-item>
+
         </ion-menu-toggle>   
       </ion-list>
     </ion-content>

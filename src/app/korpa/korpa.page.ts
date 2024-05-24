@@ -60,11 +60,16 @@ export class KorpaPage implements OnInit {
           //datum: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
           kupacID: userObjId,
           datum: new Date(),
+          status: "u obradi",
         };
 
         const stavke = this.korpa.map(proizvod => ({
-          proizvodID: proizvod.id
+          proizvodID: proizvod.id,
+          proizvodName: proizvod.name,
+          imageUrl: proizvod.imageUrl,
+          price: proizvod.price,
         }));
+
 
         this.porudzbinaServis.kreirajPorudzbinu(porudzbina, stavke).subscribe((porudzbinaID) => {
           console.log('Porudžbina kreirana uspešno. ID:', porudzbinaID);

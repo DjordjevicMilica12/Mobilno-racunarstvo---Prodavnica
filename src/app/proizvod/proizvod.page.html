@@ -1,35 +1,53 @@
 
-  <ion-content [fullscreen]="true">
+  <ion-content [fullscreen]="false">
       <ion-toolbar>
         <ion-icon name="chevron-back-outline" (click)="goBack()" id="strelica"></ion-icon>
         <ion-title id="naslov">{{product?.name}}</ion-title>
       </ion-toolbar>
     
-    <ion-content>
+    <!-- <ion-content> -->
       <ion-img
       [src]="product?.imageUrl"
       alt="LAGANO">
     </ion-img>
 
+    <div id="korpa">
+      <button (click)="dodajUKorpu()" [class.clicked]="clicked">
+        Dodaj u korpu
+      </button>
+    </div>
     
     <ion-label id="infoProizvod">
       Informacije o proizvodu
     </ion-label>
     
     <ion-label id="cena">
-     {{product?.price}}
+     {{product?.price}} din
     </ion-label>
+
     
       <ion-label id="opisProizvoda">
        {{product?.description}}
       </ion-label>
 
-      <div id="korpa">
-        <button (click)="dodajUKorpu()" [class.clicked]="clicked">
-          Dodaj u korpu
-        </button>
-      </div>
+      <ion-label id="infoProizvod">
+        Dostava
+      </ion-label>
 
-    </ion-content>
+      <ion-label id="Dostava">
+        Vreme isporuke zavisi od izabranog tipa isporuke.<br>
+        <div id="tackice">
+          <span class="opis"> Tipovi isporuke (Procenjeno vreme čekanja):</span><br>
+          <span class="opis">* Standardna isporuka (2-5 radnih dana)</span><br>
+          <span class="opis">* Prioritetna isporuka (2-3 radna dana) + 200 RSD</span><br>
+          <span class="opis">* Odložena isporuka (5+ radnih dana)</span>
+        </div>
+          
+        </ion-label>
+    
+
+
+
+    <!-- </ion-content> -->
   </ion-content>
   

@@ -45,8 +45,8 @@ ion-content {
     --border-width: 0;
     font-size: 14px;
     font-weight: bold;
-    margin: auto; /* Postavljanje na sredinu */
-    display: block; /* Da bi se primenilo margin: auto; */
+    margin: auto; 
+    display: block;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 10px;
@@ -66,12 +66,12 @@ ion-content {
 
 #kanta {
     display: flex;
-    align-items: center; /* Poravnanje po vertikali */
-    justify-content: space-between; /* Prostor između elemenata */
+    align-items: center;
+    justify-content: space-between;
     padding: 10px;
-    border: 1px solid #000; /* Dodaje okvir */
-    border-radius: 5px; /* Dodaje zaobljene uglove, po želji */
-    float: right; /* Pomera div skroz udesno */
+    border: 1px solid #000;
+    border-radius: 5px; 
+    float: right;
 
     margin-top: 20px;
     margin-bottom: 20px;

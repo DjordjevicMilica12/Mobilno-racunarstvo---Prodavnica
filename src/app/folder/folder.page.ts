@@ -10,8 +10,8 @@ import { ProizvodServisService } from '../proizvod-servis.service';
 export class FolderPage implements OnInit {
   public folder: string = '';
   public products: any[] = [];
-  public maleProducts: any[] = []; // Proizvodi za muškarce
-  public femaleProducts: any[] = []; // Proizvodi za žene
+  public maleProducts: any[] = [];
+  public femaleProducts: any[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
