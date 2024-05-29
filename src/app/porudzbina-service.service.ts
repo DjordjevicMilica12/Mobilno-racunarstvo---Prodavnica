@@ -37,9 +37,9 @@ export class PorudzbinaServiceService {
     return this.trenutnaPorudzbinaID;
   }
 
-  obrisiPorudzbinu(porudzbinaId: string): Observable<any> {
-    return this.http.delete<any>(`${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaId}.json`);
-  }
+  // obrisiPorudzbinu(porudzbinaId: string): Observable<any> {
+  //   return this.http.delete<any>(`${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaId}.json`);
+  // }
 
 
   izmeniPodatkeKorisnika(newData: any) {
@@ -80,8 +80,14 @@ export class PorudzbinaServiceService {
     );
   }
 
-
-
+  otkaziPorudzbinu(porudzbinaId: string): Observable<void> {
+    const url = `${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaId}.json`;
+    return this.http.patch<void>(url, { status: 'otkazane' }).pipe(
+      tap(() => {
+        console.log('Status porudžbine je uspešno promenjen na "otkazane".');
+      })
+    );
+  }
 } 
 
 

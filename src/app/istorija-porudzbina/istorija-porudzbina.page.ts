@@ -73,7 +73,14 @@ formatImageUrl(url: string): string {
   return url.replace(/['"]+/g, '');
 }
 
-
+obrisiPorudzbinu(porudzbina: any, event: Event) {
+  event.stopPropagation(); // Da se spreči prikazivanje detalja pri klik na ikonicu
+  if (confirm('Da li ste sigurni da želite da obrišete ovu porudžbinu?')) {
+    this.porudzbinaService.otkaziPorudzbinu(porudzbina.id).subscribe(() => {
+      this.osveziPorudzbine();
+    });
+  }
+}
 
 
 }

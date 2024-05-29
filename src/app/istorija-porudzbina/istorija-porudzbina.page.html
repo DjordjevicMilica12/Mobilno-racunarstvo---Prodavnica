@@ -1,26 +1,3 @@
-<!-- <ion-header [translucent]="false">
-  <ion-toolbar>
-    <ion-title>istorijaPorudzbina</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
-<!-- <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar></ion-toolbar>  -->
-    <!-- ovo mora da stoji da bi se video naslov inc ide gore  -->
-    <!-- <ion-toolbar>
-      <ion-title size="large" id="istorijaPorudzbina">Istorija porudzbina</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
-
-  <!-- <ion-list id="lista"> -->
-    <!-- <ion-item></ion-item>
-    <ion-item></ion-item>
-    <ion-item></ion-item> -->
-  <!-- </ion-list>
-
-</ion-content> -->
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar></ion-toolbar>
@@ -39,10 +16,13 @@
     </ng-container>
     <ng-container *ngFor="let status of groupedPorudzbine | keyvalue">
       <ion-item-divider color="light">{{ status.key }}</ion-item-divider>
-      <ion-item *ngFor="let porudzbina of status.value" (click)="prikaziDetalje(porudzbina)">
+        <ion-item *ngFor="let porudzbina of status.value" (click)="prikaziDetalje(porudzbina)">
         <ion-label>
+          <div id="datumIKanta">
           <h2>{{  formatDatum(porudzbina.datum) }}</h2>
-          <p>Status: {{ porudzbina.status }}</p>
+          <ion-icon name="trash-outline" slot="end" id="trash" *ngIf="porudzbina.status === 'u obradi'" (click)="obrisiPorudzbinu(porudzbina, $event)"></ion-icon>
+          </div>
+            <p>Status: {{ porudzbina.status }}</p>
         </ion-label>
       </ion-item>
     </ng-container>

@@ -77,7 +77,9 @@ export class KorpaPage implements OnInit {
           // this.router.navigate(['/Pocetna']);
         });
       }
-
+      
+      this.korpaServis.isprazniKorpu();
+      this.ukupanIznos = 0;
     } else {
       this.router.navigate(['/prijava']); 
     }
@@ -139,18 +141,18 @@ export class KorpaPage implements OnInit {
     this.ukupanIznos = 0;
   }
 
-  obrisiPorudzbinu(){
-    const porudzbinaID = this.porudzbinaServis.dajTrenutniIDPorudzbine();
-    if (porudzbinaID) {
-      this.porudzbinaServis.obrisiPorudzbinu(porudzbinaID).subscribe(() => {
-        alert('Porudžbina je uspešno obrisana.');
-        this.korpaServis.isprazniKorpu();
-        this.ukupanIznos = 0;
-        this.isModalOpen = false;
-      });
-    } else {
-      alert('Nema aktivne porudžbine za brisanje.');
-    }
-}
+//   obrisiPorudzbinu(){
+//     const porudzbinaID = this.porudzbinaServis.dajTrenutniIDPorudzbine();
+//     if (porudzbinaID) {
+//       this.porudzbinaServis.obrisiPorudzbinu(porudzbinaID).subscribe(() => {
+//         alert('Porudžbina je uspešno obrisana.');
+//         this.korpaServis.isprazniKorpu();
+//         this.ukupanIznos = 0;
+//         this.isModalOpen = false;
+//       });
+//     } else {
+//       alert('Nema aktivne porudžbine za brisanje.');
+//     }
+// }
   
 }
