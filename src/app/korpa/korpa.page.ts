@@ -57,7 +57,7 @@ export class KorpaPage implements OnInit {
         const userObjId = JSON.parse(userId);
 
         const porudzbina = {
-          //datum: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+          //datum: format(new Date(), 'yyyy-MM-dd HH:mm:ss'), 
           kupacID: userObjId,
           datum: new Date(),
           status: "u obradi",

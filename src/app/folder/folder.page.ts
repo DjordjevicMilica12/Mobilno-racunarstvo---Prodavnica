@@ -22,29 +22,38 @@ export class FolderPage implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe((data: any[]) => {
       this.products = data;
-      this.maleProducts = this.products.filter(product => product.pol === 'muski');
-      this.femaleProducts = this.products.filter(product => product.pol === 'zenski');
       this.checkFolderURL();
+      //this.maleProducts = this.products.filter(product => product.pol === 'muski');
+      //this.femaleProducts = this.products.filter(product => product.pol === 'zenski');
     });
   }
 
-  handleInput(event: any) {
-    const query = event.target.value.toLowerCase();
-    // filter za musk
-    this.maleProducts = this.products
-      .filter(product => product.pol === 'muski')
-      .filter(product =>
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
-      );
-    // filter za zens
-    this.femaleProducts = this.products
-      .filter(product => product.pol === 'zenski')
-      .filter(product =>
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
-      );
+ 
+handleInput(event: any) {
+  const query = event.target.value.toLowerCase();
+
+  if (query === '') {
+    this.checkFolderURL(); //postavlja na prvobitnu kolekciju
+  } else {
+    if (this.folder === 'Muska kolekcija') {
+      this.maleProducts = this.products
+        .filter(product => product.pol === 'muski')
+        .filter(product =>
+          product.name.toLowerCase().includes(query) ||
+          product.description.toLowerCase().includes(query)
+        );
+    } else if (this.folder === 'Ženska kolekcija') {
+      this.femaleProducts = this.products
+        .filter(product => product.pol === 'zenski')
+        .filter(product =>
+          product.name.toLowerCase().includes(query) ||
+          product.description.toLowerCase().includes(query)
+        );
+    }
   }
+}
+
+
 
   redirectedToProduct(product: any) {
     this.router.navigate(['/proizvod', product.name], {
@@ -56,9 +65,11 @@ export class FolderPage implements OnInit {
     const folderUrl = this.router.url;
     if (folderUrl.includes('Zene')) {
       this.femaleProducts = this.products.filter(product => product.pol === 'zenski');
+      this.folder='Ženska kolekcija'
       this.maleProducts = [];
     } else if (folderUrl.includes('Muskarci')) {
       this.maleProducts = this.products.filter(product => product.pol === 'muski');
+      this.folder='Muska kolekcija'
       this.femaleProducts = [];
     }
   }

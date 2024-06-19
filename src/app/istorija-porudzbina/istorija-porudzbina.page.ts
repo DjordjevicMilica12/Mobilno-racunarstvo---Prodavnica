@@ -67,15 +67,13 @@ export class IstorijaPorudzbinaPage implements OnInit {
     return `${formattedDate} ${formattedTime}`;
   }
 
-  // Add this method to your IstorijaPorudzbinaPage component
 formatImageUrl(url: string): string {
-  // If the url is already a valid string, this might be redundant, but adding it for the sake of clarity.
   return url.replace(/['"]+/g, '');
 }
 
 obrisiPorudzbinu(porudzbina: any, event: Event) {
   event.stopPropagation(); // Da se spreči prikazivanje detalja pri klik na ikonicu
-  if (confirm('Da li ste sigurni da želite da obrišete ovu porudžbinu?')) {
+  if (confirm('Da li ste sigurni da želite da otkažete ovu porudžbinu?')) {
     this.porudzbinaService.otkaziPorudzbinu(porudzbina.id).subscribe(() => {
       this.osveziPorudzbine();
     });

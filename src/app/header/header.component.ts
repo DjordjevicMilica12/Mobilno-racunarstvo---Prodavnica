@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'app-header',
@@ -7,19 +8,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent  implements OnInit {
-  ngOnInit() {}
-
   constructor(private router: Router) {}
-
+  
+  ngOnInit() {}
 
   redirectedToKorpa(){
     this.router.navigate(['/korpa']);
   }
   redirectedToNalog(){
-    this.router.navigate(['/prijava']);
+      this.router.navigate(['/prijava']);
   }
   redirectedToPocetna(){
     this.router.navigate(['/Pocetna']);
   }
+
+
 
 }

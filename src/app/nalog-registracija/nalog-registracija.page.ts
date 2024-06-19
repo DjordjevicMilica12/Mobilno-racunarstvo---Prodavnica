@@ -48,6 +48,7 @@ export class NalogRegistracijaPage {
         this.router.navigate(['/prijava']);
       }, (error) => {
         console.error('Greška prilikom registracije:', error);
+        alert("Niste lepo popunili polja!");
       });
     }
   }

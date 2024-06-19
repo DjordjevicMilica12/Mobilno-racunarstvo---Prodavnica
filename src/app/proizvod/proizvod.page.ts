@@ -27,6 +27,7 @@ export class ProizvodPage implements OnInit {
 
   ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
+    //u folderu smo poslali state - proudct! objekat ceo saljemo
     if (navigation?.extras?.state) {
       this.product = navigation.extras.state['product'];
     } else {

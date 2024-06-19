@@ -21,7 +21,6 @@ export class PorudzbinaServiceService {
       switchMap(response => {
         const porudzbinaID = response.name;
         const stavkeRequests = stavke.map((stavka, index) => {
-          // stavka.redniBroj = index + 1;
           return this.http.put(`${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaID}/stavke/${index}.json`, stavka);
         });
         return forkJoin(stavkeRequests).pipe(map(() => porudzbinaID));

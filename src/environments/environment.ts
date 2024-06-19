@@ -15,8 +15,8 @@ export const environment = {
     databaseURL: 'https://prodavnica-mob-rac-default-rtdb.europe-west1.firebasedatabase.app',
     projectId: 'prodavnica-mob-rac',
     storageBucket: 'prodavnica-mob-rac.appspot.com',
-    messagingSenderId: '922801498229', // Dodajte ovu liniju
-    appId: '1:922801498229:web:abcdef123456' // Dodajte ovu liniju
+    messagingSenderId: '922801498229', 
+    appId: '1:922801498229:web:abcdef123456' 
   }
 };
 
