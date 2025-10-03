@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Prodavnica-backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b1ddbb24f2311ec786963e868793e52134ad34e2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Prodavnica-backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Prodavnica-backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
