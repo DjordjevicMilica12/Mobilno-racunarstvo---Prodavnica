@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-// import { AuthService } from './auth.service';
-// import { Databse, set,ref ,update} from '@angular/fire/database';
-import { map, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
+import { Porudzbina } from './modeli/porudzbina.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,79 +11,42 @@ export class PorudzbinaServiceService {
 
   constructor(private http: HttpClient) { }
   private trenutnaPorudzbinaID: string | null = null;
-
+  private url= environment.apiUrl;
  
 
-  kreirajPorudzbinu(porudzbina: any, stavke: any[]): Observable<any> {
-    return this.http.post<any>(`${environment.firebaseConfig.databaseURL}/porudzbine.json`, porudzbina).pipe(
-      switchMap(response => {
-        const porudzbinaID = response.name;
-        const stavkeRequests = stavke.map((stavka, index) => {
-          return this.http.put(`${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaID}/stavke/${index}.json`, stavka);
-        });
-        return forkJoin(stavkeRequests).pipe(map(() => porudzbinaID));
-      })
+  kreirajPorudzbinu(porudzbina: Porudzbina, token:string): Observable<any> {
+    return this.http.post<any>(`${this.url}/porudzbina`, porudzbina, {
+      headers: { Authorization: `Bearer ${token}` },
+      responseType: 'text' as 'json'
+      }
     );
   }
 
-  PostaviPorudzbinaID(porudzbinaID: string) {
+ /* PostaviPorudzbinaID(porudzbinaID: string) {
     this.trenutnaPorudzbinaID = porudzbinaID;
   }
 
   dajTrenutniIDPorudzbine(): string | null {
     return this.trenutnaPorudzbinaID;
+  }*/
+
+  izmeniPodatkeKorisnika(newData: any, token:string) {
+    return this.http.patch(`${this.url}/korisnik`, newData, {
+      headers: { Authorization: `Bearer ${token}`}
+    });
   }
 
-  // obrisiPorudzbinu(porudzbinaId: string): Observable<any> {
-  //   return this.http.delete<any>(`${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaId}.json`);
-  // }
 
-
-  izmeniPodatkeKorisnika(newData: any) {
-    const localId = localStorage.getItem('ngx-webstorage|localid');
-    const cleanedUserLocalId = localId ? localId.replace(/"/g, '') : null;
-    const token = localStorage.getItem('ngx-webstorage|token');
-    console.log(localId);
-    console.log(token);
-    if (!token) {
-      console.log("nije prijavljen");
+  dohvatiPorudzbineZaKorisnika(token:string): Observable<any[]> {
+      return this.http.get<Porudzbina[]>(`${this.url}/porudzbina`,{ //${this.url}/porudzbina?idKorisnika=${idKorisnika}
+        headers:{ Authorization: `Bearer ${token}`}
+      });
     }
-    console.log(newData);
 
-    return this.http
-      .patch(`${environment.firebaseConfig.databaseURL}/users/${cleanedUserLocalId}.json?token=${token}`, newData)
-      .pipe(
-        tap(() => {
-          console.log('Podaci korisnika su uspešno ažurirani.');
-          // console.log(`${environment.firebaseConfig.databaseURL}/users/${localId}.json?token=${token}`, newData);
-        })
-      );
-  }
-
-
-  dohvatiPorudzbineZaKorisnika(localId: string): Observable<any[]> {
-    return this.http.get<{ [key: string]: any }>(`${environment.firebaseConfig.databaseURL}/porudzbine.json`).pipe(
-      map(porudzbine => {
-        const korisnikovePorudzbine = [];
-        const cleanedUserLocalId = localId ? localId.replace(/"/g, '') : null; 
-        for (const key in porudzbine) {
-          if (porudzbine[key]?.kupacID === cleanedUserLocalId) {
-            korisnikovePorudzbine.push({ ...porudzbine[key], id: key });
-          }
-        }
-        console.log('korisnikove porudzbine:', korisnikovePorudzbine); 
-        return korisnikovePorudzbine.length > 0 ? korisnikovePorudzbine : [];
-      })
-    );
-  }
-
-  otkaziPorudzbinu(porudzbinaId: string): Observable<void> {
-    const url = `${environment.firebaseConfig.databaseURL}/porudzbine/${porudzbinaId}.json`;
-    return this.http.patch<void>(url, { status: 'otkazane' }).pipe(
-      tap(() => {
-        console.log('Status porudžbine je uspešno promenjen na "otkazane".');
-      })
-    );
+  otkaziPorudzbinu(porudzbinaId: string, token: string): Observable<void> {
+   return this.http.patch<void>(`${this.url}/porudzbina/${porudzbinaId}/otkazi`, {}, {
+    headers: {Authorization: `Bearer ${token}`}
+   });
   }
 } 
 

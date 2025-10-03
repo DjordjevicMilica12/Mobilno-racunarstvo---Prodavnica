@@ -1,31 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'ngx-webstorage';
+import { Korisnik } from '../modeli/korisnik.model';
+import { environment } from 'src/environments/environment';
+
 
 interface PrijavaPodaci {
   email: string;
-  password: string;
-  returnSecureToken: boolean;
-}
-
-interface Odgovor {
-  kind: string;
-  idToken: string;
-  email: string;
-  refreshToken: string;
-  localId: string;
-  expiresIn: string;
-}
-
-interface KorisnikPodaci {
-  email: string;
-  lozinka:string;
-  adresa:string;
-  ime:string;
-  prezime:string;
-  brojTelefona:string;
+  lozinka: string;
 }
 
 @Component({
@@ -34,41 +17,40 @@ interface KorisnikPodaci {
   styleUrls: ['./nalog.page.scss'],
 })
 export class NalogPage implements OnInit {
+
   prijavaPodaci: PrijavaPodaci = {
     email: '',
-    password: '',
-    returnSecureToken: true
+    lozinka: ''
   };
 
-  constructor(private router: Router, private http: HttpClient, private localStorage: LocalStorageService) { }
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private localStorage: LocalStorageService
+  ) {}
 
-  ngOnInit() {
-   
-  }
+  ngOnInit() {}
+
+  private url= environment.apiUrl;
 
   ulogujSe() {
-    this.prijaviKorisnika(this.prijavaPodaci).subscribe((odgovor) => {
-      console.log('Uspešno ste se ulogovali!', odgovor);
-      this.localStorage.store('token', odgovor.idToken);
-      this.preuzmiDodatnePodatkeKorisnika(odgovor.localId).subscribe((korisnikPodaci) => {
-        console.log('Uspešno preuzeti dodatni podaci korisnika:', korisnikPodaci);
-        this.localStorage.store('user', korisnikPodaci);
-        this.localStorage.store('localId', odgovor.localId);
+    this.prijaviKorisnika(this.prijavaPodaci).subscribe({
+      next: (korisnik: any) => {
+        console.log('Uspešno ste se ulogovali!', korisnik);
+
+       
+        this.localStorage.store('user', korisnik);
+
         this.router.navigate(['/Pocetna']);
-      }, (error) => {
-        console.error('Greška prilikom preuzimanja dodatnih podataka korisnika:', error);
-      });
-    }, (error) => {
-      console.error('Greška prilikom prijave:', error);
+      },
+      error: (err) => {
+        console.error('Greška prilikom prijave:', err);
+      }
     });
   }
-  
-  private prijaviKorisnika(podaci: PrijavaPodaci) {
-    return this.http.post<Odgovor>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseConfig.firebaseAPIKey}`, podaci);
-  }
 
-  private preuzmiDodatnePodatkeKorisnika(localId: string) {
-    return this.http.get<KorisnikPodaci>(`https://prodavnica-mob-rac-default-rtdb.europe-west1.firebasedatabase.app/users/${localId}.json`);
+  private prijaviKorisnika(podaci: PrijavaPodaci) {
+    return this.http.post<Korisnik>(`${this.url}/auth/login`,podaci);
   }
 
   redirectedToRegister() {

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { KorpaServiceService } from '../korpa-service.service';
 import { ProizvodServisService } from '../proizvod-servis.service';
+import { Recenzija } from '../modeli/recenzija.model';
+import { Proizvod } from '../modeli/proizvod.model';
 
 @Component({
   selector: 'app-proizvod',
@@ -12,10 +14,10 @@ import { ProizvodServisService } from '../proizvod-servis.service';
 export class ProizvodPage implements OnInit {
   
   public productName: string | null = null;
-  public product: any;
+  public product: Proizvod= {} as Proizvod;
   clicked: boolean = false;
   formatiranOpis: string = '';
-
+  public recenzije: Recenzija[] = [];
   
   constructor(
     private route: ActivatedRoute,
@@ -30,11 +32,22 @@ export class ProizvodPage implements OnInit {
     //u folderu smo poslali state - proudct! objekat ceo saljemo
     if (navigation?.extras?.state) {
       this.product = navigation.extras.state['product'];
-    } else {
-      this.product = null; 
+      this.ucitajRecenzije(this.product.id);
     }
-
   }
+
+    
+ ucitajRecenzije(proizvodID: string) {
+  this.proizvodServis.getRecenzijeZaProizvod(proizvodID).subscribe({
+    next: (data: Recenzija[]) => {
+      this.recenzije = data;
+    },
+    error: (err) => {
+      console.warn('Nema recenzija za ovaj proizvod');
+      this.recenzije = []; // prikaži prazan spisak
+    }
+  });
+}
 
 
   goBack() {

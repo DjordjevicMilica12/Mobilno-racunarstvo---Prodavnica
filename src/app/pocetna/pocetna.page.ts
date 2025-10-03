@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProizvodServisService } from '../proizvod-servis.service';
+import { Proizvod } from '../modeli/proizvod.model';
 
 @Component({
   selector: 'app-pocetna',
@@ -8,13 +9,13 @@ import { ProizvodServisService } from '../proizvod-servis.service';
   styleUrls: ['./pocetna.page.scss'],
 })
 export class PocetnaPage implements OnInit{
-  public products: any[] = [];
+  public products: Proizvod[] = [];
 
 
   currentSlide = 0;
   
   ngOnInit() {
-    this.productService.getProducts().subscribe((data: any[]) => {
+    this.productService.getProducts().subscribe((data: Proizvod[]) => {
       this.products = data;
     });
   }

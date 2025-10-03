@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="istorija-porudzbina-strana">
   <ion-header collapse="condense">
     <ion-toolbar></ion-toolbar>
     <ion-toolbar>
@@ -28,29 +28,56 @@
     </ng-container>
   </ion-list>
 
-  <ion-modal [isOpen]="!!selectedPorudzbina" (didDismiss)="dismissModal()">
-    <ng-container *ngIf="selectedPorudzbina">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Detalji porudzbine</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="dismissModal()">Zatvori</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list *ngIf="selectedPorudzbina?.stavke">
-          <ion-item *ngFor="let stavka of selectedPorudzbina.stavke">
-            <ion-thumbnail slot="start" *ngIf="stavka?.imageUrl">
-              <img [src]="formatImageUrl(stavka.imageUrl)">
-            </ion-thumbnail>
-            <ion-label>
-              <h2>{{ stavka.proizvodName }}</h2>
-              <p>Cena: {{ stavka.price }} din</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ng-container>
-  </ion-modal>
+<ion-modal [isOpen]="!!selectedPorudzbina" (didDismiss)="dismissModal()">
+  <ng-container *ngIf="selectedPorudzbina">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Detalji porudzbine</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="dismissModal()">Zatvori</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list *ngIf="selectedPorudzbina?.stavke">
+        <ion-item *ngFor="let stavka of selectedPorudzbina.stavke">
+          <ion-thumbnail slot="start" *ngIf="stavka?.imageUrl">
+            <img [src]="formatImageUrl(stavka.imageUrl)">
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ stavka.nazivProizvoda }}</h2>
+            <p>Cena: {{ stavka.cena }} din</p>
+          </ion-label>
+          <ion-button *ngIf="!openRecenzijaForm(stavka.proizvodID)" fill="clear" size="small" (click)="ostaviRecenziju(stavka)">
+            Ostavi recenziju
+          </ion-button>
+          <div *ngIf="openRecenzijaForm(stavka.proizvodID)" class="recenzija-form">
+            <ion-item>
+              <ion-textarea 
+                  placeholder="Napiši recenziju..." 
+                  [(ngModel)]="getRecenzija(stavka.proizvodID).tekst">
+              </ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-button expand="block" (click)="otvoriKameru(stavka)">
+                Fotografisi proizvod
+              </ion-button>
+            </ion-item>
+            <div *ngIf="getRecenzija(stavka.proizvodID)?.slika" style="margin-top: 10px;">
+              <p>Slika je sačuvana ✔</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <ion-button color="medium" (click)="cancelRecenzija(stavka)">Otkazi</ion-button>
+              <ion-button color="primary" (click)="saveRecenzija(stavka)">Sacuvaj</ion-button>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-container>
+</ion-modal>
 </ion-content>
+
+<!--
+<ion-content [fullscreen]="true"> <ion-header collapse="condense"> <ion-toolbar></ion-toolbar> <ion-toolbar> <ion-title size="large" id="istorijaPorudzbina">Istorija porudzbina</ion-title> </ion-toolbar> </ion-header> <ion-list id="lista"> <ng-container *ngIf="porudzbine.length === 0"> <ion-item> <ion-label> <h2>Nema porudžbina za prikaz</h2> </ion-label> </ion-item> </ng-container> <ng-container *ngFor="let status of groupedPorudzbine | keyvalue"> <ion-item-divider color="light">{{ status.key }}</ion-item-divider> <ion-item *ngFor="let porudzbina of status.value" (click)="prikaziDetalje(porudzbina)"> <ion-label> <div id="datumIKanta"> <h2>{{ formatDatum(porudzbina.datum) }}</h2> <ion-icon name="trash-outline" slot="end" id="trash" *ngIf="porudzbina.status === 'u obradi'" (click)="obrisiPorudzbinu(porudzbina, $event)"></ion-icon> </div> <p>Status: {{ porudzbina.status }}</p> </ion-label> </ion-item> </ng-container> </ion-list> <ion-modal [isOpen]="!!selectedPorudzbina" (didDismiss)="dismissModal()"> <ng-container *ngIf="selectedPorudzbina"> <ion-header> <ion-toolbar> <ion-title>Detalji porudzbine</ion-title> <ion-buttons slot="end"> <ion-button (click)="dismissModal()">Zatvori</ion-button> </ion-buttons> </ion-toolbar> </ion-header> <ion-content> <ion-list *ngIf="selectedPorudzbina?.stavke"> <ion-item *ngFor="let stavka of selectedPorudzbina.stavke"> <ion-thumbnail slot="start" *ngIf="stavka?.imageUrl"> <img [src]="formatImageUrl(stavka.imageUrl)"> </ion-thumbnail> <ion-label> <h2>{{ stavka.nazivProizvoda }}</h2> <p>Cena: {{ stavka.cena }} din</p> </ion-label> </ion-item> </ion-list> </ion-content> </ng-container> </ion-modal> </ion-content>
+-->

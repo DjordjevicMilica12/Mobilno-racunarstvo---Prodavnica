@@ -1,9 +1,10 @@
 <ion-content [fullscreen]="true" id="ionContent">
 
   <ion-header [translucent]="false" id="naslov"></ion-header>
-  <div class="image-container">
+<!-- <div class="image-container">
     <img id="slikaNaslovna" src="https://lh3.googleusercontent.com/-PJTKvL68rD8EXPcA2RnNghE8Az2zSNBJh13um-sIqa9JxNUzAu_4Xc9_p0zXYs3lC2zT3ykwr-JHLSCPIzkzlbdvnCDvlHTI9MPcNVp5pssQeLu30dE-yOWYO4VgHM0LQ=w1280" alt="Opis slike">
   </div>
+-->
   
 <div class="izdvajamo">
   <ion-label>Iz ponude izdvajamo</ion-label>
@@ -11,7 +12,7 @@
 
   <div class="carousel-container">
     <div class="product" *ngFor="let product of products; let i = index" [ngClass]="{ 'active': i === currentSlide }">
-      <img [src]="product.imageUrl" alt="{{ product.content }}">
+      <img [src]="product.imageUrl" alt="{{ product.name }}">
     </div>
   </div>
 

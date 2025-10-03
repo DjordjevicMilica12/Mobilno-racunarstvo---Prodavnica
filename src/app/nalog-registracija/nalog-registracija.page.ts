@@ -1,16 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Korisnik } from '../modeli/korisnik.model';
 import { environment } from 'src/environments/environment';
-
-interface Korisnik {
-  ime: string;
-  prezime: string;
-  adresa: string;
-  email: string;
-  lozinka: string;
-  brojTelefona: string;
-}
 
 interface Odgovor {
   kind: string;
@@ -30,21 +22,25 @@ interface Odgovor {
 export class NalogRegistracijaPage {
 
   korisnik: Korisnik = {
+    kupacID: '',
     ime: '',
     prezime: '',
     adresa: '',
     email: '',
     lozinka: '',
-    brojTelefona: ''
+    brojTelefona: null
   };
 
   constructor(private router: Router, private http: HttpClient) { }
 
+  private url=environment.apiUrl;
+
   registrujSe() {
     if (this.validirajPodatke()) {
       this.register(this.korisnik).subscribe((odgovor) => {
+
         console.log('Uspešno ste se registrovali!', odgovor);
-        this.sacuvajPodatkeUDatabase(odgovor.localId, this.korisnik);
+        
         this.router.navigate(['/prijava']);
       }, (error) => {
         console.error('Greška prilikom registracije:', error);
@@ -54,22 +50,7 @@ export class NalogRegistracijaPage {
   }
 
   private register(korisnik: Korisnik) {
-    return this.http.post<Odgovor>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseConfig.firebaseAPIKey}`,
-      { email: korisnik.email, password: korisnik.lozinka, returnSecureToken: true });
-  }
-
-  private sacuvajPodatkeUDatabase(userId: string, korisnik: Korisnik) {
-
-    this.http.put(`https://prodavnica-mob-rac-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}.json`, korisnik)
-    .subscribe(
-      () => {
-        console.log('Podaci su uspešno sačuvani u Realtime Database-u.');
-      },
-      (error) => {
-        console.error('Došlo je do greške prilikom čuvanja podataka u Realtime Database-u:', error);
-      }
-    );
-  
+    return this.http.post<Odgovor>(`${this.url}/auth/register`,korisnik);
   }
 
   validirajPodatke(): boolean {

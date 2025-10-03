@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { KorpaServiceService } from '../korpa-service.service';
 import { Router } from '@angular/router';
 import { PorudzbinaServiceService } from '../porudzbina-service.service';
+import { Korisnik } from '../modeli/korisnik.model';
+import { StavkaPorudzbine } from '../modeli/stavkaPorudzbine.model';
+import { Porudzbina } from '../modeli/porudzbina.model';
 
 
 @Component({
@@ -9,38 +12,36 @@ import { PorudzbinaServiceService } from '../porudzbina-service.service';
   templateUrl: './korpa.page.html',
   styleUrls: ['./korpa.page.scss'],
 })
+
 export class KorpaPage implements OnInit {
   public korpa: any[] = [];
   public ukupanIznos: number = 0;
-  public prom: string="ddd";
-
-  public ime: string="";
-  public prezime: string="";
-  public adresa: string="";
-  public brojTelefona: string="";
-  public email: string="";
-  public lozinka: string="";
+  public korisnik:Korisnik ={} as Korisnik;
+  isModalOpen = false;
 
   constructor(
     private korpaServis:KorpaServiceService,
     private router: Router,
     private porudzbinaServis: PorudzbinaServiceService,
-    ) { }
-
+  ) { }
+  
   ngOnInit() {
+    const prijavljeniKorisnik = localStorage.getItem('ngx-webstorage|user');
+    if(prijavljeniKorisnik){
+      this.korisnik=JSON.parse(prijavljeniKorisnik);
+    }
+  
     this.korpaServis.getKorpa().subscribe(korpa => {
       this.korpa = korpa;
       this.izracunajUkupanIznos();
-    });
+    });  
   }
 
   private izracunajUkupanIznos() {
     this.ukupanIznos = this.korpa.reduce((total, proizvod) => total + parseFloat(proizvod.price), 0);
   }
   
-  isModalOpen = false;
-
-  
+ 
 
   goToCheckout() {
 
@@ -49,40 +50,42 @@ export class KorpaPage implements OnInit {
       return;
     }
 
-    if (this.isUserLoggedIn()) {
-      this.isModalOpen = true;
+    if (!this.korisnik) {
+      this.router.navigate(['/prijava']);
+      return;
+    }  
 
-      const userId = localStorage.getItem('ngx-webstorage|localid');
-      if (userId) {
-        const userObjId = JSON.parse(userId);
+    this.isModalOpen = true;
 
-        const porudzbina = {
-          //datum: format(new Date(), 'yyyy-MM-dd HH:mm:ss'), 
-          kupacID: userObjId,
-          datum: new Date(),
-          status: "u obradi",
-        };
+    const stavke : StavkaPorudzbine[] = this.korpa.map(proizvod => ({
+        proizvodID: proizvod.id,
+        nazivProizvoda: proizvod.name,
+        imageUrl: proizvod.imageUrl,
+        cena: proizvod.price,
+    }));
 
-        const stavke = this.korpa.map(proizvod => ({
-          proizvodID: proizvod.id,
-          proizvodName: proizvod.name,
-          imageUrl: proizvod.imageUrl,
-          price: proizvod.price,
-        }));
+    const porudzbina: Porudzbina = {
+      kupacID: this.korisnik.kupacID,
+      datum: new Date(),
+      status: "u obradi",
+      stavke: stavke
+    };
 
+    if(this.korisnik && this.korisnik.token){
 
-        this.porudzbinaServis.kreirajPorudzbinu(porudzbina, stavke).subscribe((porudzbinaID) => {
-          console.log('Porudžbina kreirana uspešno. ID:', porudzbinaID);
-          this.porudzbinaServis.PostaviPorudzbinaID(porudzbinaID);
-          // this.router.navigate(['/Pocetna']);
-        });
-      }
+      this.porudzbinaServis.kreirajPorudzbinu(porudzbina, this.korisnik.token).subscribe((porudzbinaID) => {
+        console.log('Porudžbina kreirana uspešno. ID:', porudzbinaID);
+        //  this.porudzbinaServis.PostaviPorudzbinaID(porudzbinaID);
+      });
+    }else{
+      this.router.navigate(['/prijava']);
+      return;
+    }
+      
       
       this.korpaServis.isprazniKorpu();
       this.ukupanIznos = 0;
-    } else {
-      this.router.navigate(['/prijava']); 
-    }
+   
   }
 
 
@@ -90,42 +93,28 @@ export class KorpaPage implements OnInit {
     this.isModalOpen = isOpen;
   }
 
-  isUserLoggedIn(): boolean {
-    const userJSON = localStorage.getItem('ngx-webstorage|user');
-    if (userJSON) {
-      const userObj = JSON.parse(userJSON);
-      const email = userObj.email;
-      const lozinka = userObj.lozinka;
 
-      this.ime = userObj.ime;
-      this.prezime = userObj.prezime;
-      this.adresa = userObj.adresa;
-      this.brojTelefona = userObj.brojTelefona;
-
-      return !!email && !!lozinka;
-    }
-    return false;
-  }
   
   SacuvajPromene(){
-    const userLocalId = localStorage.getItem('ngx-webstorage|localid');
-    const userJSON = localStorage.getItem('ngx-webstorage|user');
-    if (userLocalId && userJSON) {
-      const userObj = JSON.parse(userJSON);
-      const newData = {
-        ime: this.ime,
-        prezime: this.prezime,
-        adresa: this.adresa,
-        brojTelefona: this.brojTelefona,
-        email:userObj.email,
-        lozinka:userObj.lozinka,
+    if(!this.korisnik ) return;
+
+      const newData: Partial<Korisnik> = {
+        kupacID:this.korisnik.kupacID,
+        ime: this.korisnik.ime,
+        prezime: this.korisnik.prezime,
+        adresa: this.korisnik.adresa,
+        brojTelefona: this.korisnik.brojTelefona
       }
 
-      this.porudzbinaServis.izmeniPodatkeKorisnika(newData).subscribe(() => {
+    if(this.korisnik && this.korisnik.token){
+      this.porudzbinaServis.izmeniPodatkeKorisnika(newData, this.korisnik.token).subscribe(() => {
         console.log('Podaci korisnika su ažurirani.');
+        localStorage.setItem('ngx-webstorage|user', JSON.stringify({ ...this.korisnik }));
       });
+    }else{
+        this.router.navigate(['/prijava']);
     }
-  }
+    }
 
   NastaviSaPorudzbinom() {
 
@@ -140,19 +129,5 @@ export class KorpaPage implements OnInit {
     this.korpaServis.isprazniKorpu();
     this.ukupanIznos = 0;
   }
-
-//   obrisiPorudzbinu(){
-//     const porudzbinaID = this.porudzbinaServis.dajTrenutniIDPorudzbine();
-//     if (porudzbinaID) {
-//       this.porudzbinaServis.obrisiPorudzbinu(porudzbinaID).subscribe(() => {
-//         alert('Porudžbina je uspešno obrisana.');
-//         this.korpaServis.isprazniKorpu();
-//         this.ukupanIznos = 0;
-//         this.isModalOpen = false;
-//       });
-//     } else {
-//       alert('Nema aktivne porudžbine za brisanje.');
-//     }
-// }
   
 }
